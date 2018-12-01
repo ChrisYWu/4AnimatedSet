@@ -54,14 +54,22 @@
 		AA9FE9F821B33E28006CE8E2 /* 4AnimatedSet */ = {
 			isa = PBXGroup;
 			children = (
-				AA9FE9F921B33E28006CE8E2 /* AppDelegate.swift */,
 				AA9FE9FB21B33E28006CE8E2 /* ViewController.swift */,
 				AA9FE9FD21B33E28006CE8E2 /* Main.storyboard */,
-				AA9FEA0021B33E29006CE8E2 /* Assets.xcassets */,
-				AA9FEA0221B33E29006CE8E2 /* LaunchScreen.storyboard */,
 				AA9FEA0521B33E29006CE8E2 /* Info.plist */,
+				AA9FEA0D21B33EC0006CE8E2 /* SupportingFiles */,
 			);
 			path = 4AnimatedSet;
+			sourceTree = "<group>";
+		};
+		AA9FEA0D21B33EC0006CE8E2 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				AA9FEA0021B33E29006CE8E2 /* Assets.xcassets */,
+				AA9FE9F921B33E28006CE8E2 /* AppDelegate.swift */,
+				AA9FEA0221B33E29006CE8E2 /* LaunchScreen.storyboard */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
