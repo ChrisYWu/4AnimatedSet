@@ -11,215 +11,179 @@ import UIKit
 class ViewController: UIViewController {
     var game = SetGame()
 
-    private var deal3MoreButtonBgColor: UIColor? = nil
     private var initialDispense = 12
-
+    lazy var animator = UIDynamicAnimator(referenceView: cardsArea)
+    lazy var cardBehavior = CardBehavior(in: animator)
+    
     @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var deal3MoreButton: UIButton!
     @IBOutlet weak var newGameButton: UIButton!
-    @IBOutlet weak var suggestButton: UIButton!
     
     @IBOutlet weak var cardsArea: CardsAreaView!  {
         didSet {
             let tap = UITapGestureRecognizer(target: self,
                                              action: #selector(touchCard(byHandlingGestureRecognizedBy:)))
             cardsArea.addGestureRecognizer(tap)
-            
-            let swipe = UISwipeGestureRecognizer(target: self,
-                                                 action: #selector(swipeAcross))
-            swipe.direction = [.left,.right]
-            cardsArea.addGestureRecognizer(swipe)
-            
-            let rotate = UIRotationGestureRecognizer(target: self,
-                                                     action: #selector(shuffle(byHandlingGestureRecognizedBy:)))
-            cardsArea.addGestureRecognizer(rotate)
         }
     }
-    
-    @objc func shuffle(byHandlingGestureRecognizedBy recognizer: UIRotationGestureRecognizer) {
-        switch recognizer.state {
-        case .ended:
-            let numberOfCards = game.numberOfCardsOnTable
-            game.shuffle()
-            cardsArea.removeAll()
-            putCardsOnTable(numberOfCards: numberOfCards)
-            setShouldSuggest()
-
-        default: break
-        }
-    }
-    
-    @objc func swipeAcross(byHandlingGestureRecognizedBy recognizer: UISwipeGestureRecognizer) {
-        switch recognizer.state {
-        case .changed,.ended:
-            deal3More(deal3MoreButton)
-        default: break
-        }
-    }
+        
+    var cardToGoDiscard : CardView = CardView()
     
     @objc func touchCard(byHandlingGestureRecognizedBy recognizer: UITapGestureRecognizer) {
         switch recognizer.state {
         case .changed,.ended:
             if let card = cardsArea.getCardAtHitPoint(recognizer.location(in: cardsArea)) {
-                //Find out if we should chose one more card, or deselect a card
-                if game.canChooseMore {
-                    if (game.isTheCardSelected(card)) {
-                        game.deselectCard(card)
-                        cardsArea.setCardDisplayState(card, displayState: .onDisplay)
-                    }
-                    else {
-                        game.selectCard(card)
-                        cardsArea.setCardDisplayState(card, displayState: .chosen)
-                    }
-                }
-                else {
-                    //Can't choose more becuase we have 3 already, so replace/deslect the chosen one and add new choice
-                    let (isSet, cards) = game.tryGetSelectedAsASet()
-                    
-                    //Replace, remove or reset
-                    for card in cards {
-                        if (isSet) {
-                            cardsArea.removeCard(card)
-                            putCardsOnTable(numberOfCards: 1)
-                        }
-                        else {
-                            cardsArea.setCardDisplayState(card, displayState: .onDisplay)
-                        }
-                    }
-                    
-                    if (isSet) {
-                        game.recyleAllSelectedCards()
-                    }
-                    else {
-                        game.deselectAll()
-                    }
-                    
-                    //Now we can select again, the card may move after selection because of remove and reOrder
-                    game.selectCard(card)
-                    cardsArea.setCardDisplayState(card, displayState: .chosen)
-                }
-                
-                //After selection we can give score and adjust state
-                giveScore()
+                cardTouched(card)
+            } else if cardsArea.isDealPileClicked(recognizer.location(in: cardsArea)) {
+                let previousSize = cardsArea.gridSize
+                UIView.transition(with: cardsArea, duration: 0.4, options: [.layoutSubviews, .curveEaseIn, .transitionCrossDissolve, .showHideTransitionViews] , animations: {
+                    self.cardsArea.gridSize += 3
+                }, completion: {completion in
+                    self.putCardsOnTable(numberOfCards: 3, startingIndex: previousSize)
+                })
             }
-            
         default: break
         }
     }
     
-    @IBAction func suggestASet(_ sender: UIButton) {
-        for card in game.resetAllSelected() {
-            cardsArea.setCardDisplayState(card, displayState: .onDisplay)
-        }
-
-        if let matchingSet = game.findAMatchSet() {
-            for card in matchingSet {
-                cardsArea.setCardDisplayState(card, displayState: .suggested)
+    private func cardTouched(_ card: Card) {
+        //1. Before selection, recover from the previous state: 3 unmatched cards
+        if (game.ThreeCardSelected) {
+            for card in game.chosenCards {
+                cardsArea.setCardDisplayState(card, displayState: .onDisplay)
             }
-        }
-        else {
-            print("All \(game.numberOfCardsOnTable) cards on table don't have a set")
+            game.deselectAll()
         }
         
+        //2. Find out if we should chose one more card, or deselect a card
+        if (game.isTheCardSelected(card)) {
+            game.deselectCard(card)
+            cardsArea.setCardDisplayState(card, displayState: .onDisplay)
+        }
+        else {
+            game.selectCard(card)
+            if (!game.ThreeCardSelected) {
+                cardsArea.setCardDisplayState(card, displayState: .chosen)
+            }
+        }
+        //3. Make decision
+        if (game.ThreeCardSelected) {
+            //Can't choose more becuase we have 3 already, so replace/deslect the chosen one and add new choice
+            let (isSet, cards) = game.tryGetSelectedAsASet()
+            
+            if (!isSet) {
+                for card in cards {
+                    cardsArea.setCardDisplayState(card, displayState: .mismatched)
+                }
+            } else {
+                game.recyleAllSelectedCards()
+                let backText = game.setMatchedString
+                for card in cards {
+                    if let cv = cardsArea.cardView(card) {
+                        cardsArea.setCardDisplayState(card, displayState: .matched)
+                        
+                        // Dispense Another card to the flyway card
+                        if let index = cardsArea.cardView(card)?.gridIndex {
+                            replaceCard(at: index)
+                        }
+                        // End of it
+                        
+                        cardsArea.bringSubviewToFront(cv)    //So that it doesn't fly behind other cards
+                        cardBehavior.addItem(cv)
+                        
+                        Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { timer in
+                            self.cardBehavior.removeItem(cv)
+                            cv.displayState = .onDisplay
+                            
+                            UIViewPropertyAnimator.runningPropertyAnimator(
+                                withDuration: 0.6,
+                                delay: 0,
+                                options: .beginFromCurrentState,
+                                animations: {
+                                    cv.frame = self.cardsArea.discardPile.frame
+                            },
+                                completion: { position in
+                                    UIView.transition(
+                                        with: cv,
+                                        duration: 0.5,
+                                        options: [.transitionFlipFromLeft],
+                                        animations: {
+                                            cv.displayState = .faceDown
+                                    },
+                                        completion: { finished in
+                                            cv.removeFromSuperview()
+                                            self.cardsArea.discardPile.backText = backText
+                                    })
+                            })
+                        }
+                    }
+                }
+            }
+            giveScore(isSet)
+        }
+
     }
     
     @IBAction func newGame(_ sender: UIButton) {
         game = SetGame()
         cardsArea.removeAll()
+        cardsArea.gridSize = cardsArea.minGridSize
+        cardsArea.addPiles()
         putCardsOnTable(numberOfCards: initialDispense)
         
-        deal3MoreButton.isEnabled = true
-        deal3MoreButton.backgroundColor = deal3MoreButtonBgColor
+        //TODO: Deal stack default style
         game.scaledScore = 0
         scoreLabel.text = "Score: \(String(format: "%.1f", game.scaledScore))"
-        
-        setShouldSuggest()
-    }
-    
-    @IBAction func deal3More(_ sender: UIButton) {
-        let (isSet, cards) = game.tryGetSelectedAsASet()
-        
-        //Replace, remove or reset
-        for card in cards {
-            if (isSet) {
-                cardsArea.removeCard(card)
-                putCardsOnTable(numberOfCards: 1)
-            }
-            else {
-                cardsArea.setCardDisplayState(card, displayState: .onDisplay)
-            }
-        }
-        
-        if (isSet) {
-            //Selected 3 matched, replaced them with 3 new ones
-            game.recyleAllSelectedCards()
-        }
-        else if cards.count == 3 {
-            //Seleced 3 not matched, deselect them and add 3 cards
-            game.deselectAll()
-            putCardsOnTable(numberOfCards: 3)
-        }
-        else {
-            //Not enough cards selected, just add 3 cards
-            putCardsOnTable(numberOfCards: 3)
-        }
-        
-        setShouldSuggest()
-    }
+   }
     
     override func viewDidLoad() {
-        suggestButton.layer.cornerRadius = 5.0
-        newGameButton.layer.cornerRadius = 5.0
-        deal3MoreButton.layer.cornerRadius = 5.0
-        deal3MoreButtonBgColor = deal3MoreButton.backgroundColor
-        
         super.viewDidLoad()
+
+        newGameButton.layer.cornerRadius = 5.0
+        // TODO: Initial putCardsOnTable(numberOfCards: initialDispense)
+        cardsArea.gridSize = initialDispense
+        cardsArea.addPiles()
         putCardsOnTable(numberOfCards: initialDispense)
-        setShouldSuggest()
     }
     
-    private func putCardsOnTable(numberOfCards number: Int) {
-        for _ in 0 ..< number
+    private func putCardsOnTable(numberOfCards number: Int, startingIndex: Int = 0) {
+        for index in 0 ..< number
         {
             if let newCard = game.drawNextCardForDisplay() {
-                cardsArea.addCard(newCard)
+                Timer.scheduledTimer(withTimeInterval: 0.4 * Double(index), repeats: false) { timer in
+                    self.cardsArea.addCard(newCard, gridIndex: index + startingIndex)
+                }
             }
             else {
-                deal3MoreButton.isEnabled = false
-                deal3MoreButton.backgroundColor = UIColor.darkGray
+                cardsArea.dealPile.removeFromSuperview()
             }
         }
-    }
-    
-    private func setShouldSuggest() {
-        let matchSet = game.findAMatchSet()
-        if matchSet != nil {
-            suggestButton.isEnabled = true
-        }
-        else {
-            suggestButton.isEnabled = false
+        
+        if !game.hasMoreCardsInDeck {
+            cardsArea.dealPile.removeFromSuperview()
         }
     }
     
-    private func giveScore() {
+    private func replaceCard(at index: Int) {
+        if let newCard = game.drawNextCardForDisplay() {
+            cardsArea.addCard(newCard, gridIndex: index)
+        } else {
+            if cardsArea.subviews.contains(cardsArea.dealPile) {
+                cardsArea.dealPile.removeFromSuperview()
+            }
+            
+            cardsArea.moveupCards(from: index)
+        }
+    }
+    
+    private func giveScore(_ isSet: Bool) {
         //Now we either have a set or not have a set, or we don't have enough
-        let (isSet, cards) = game.tryGetSelectedAsASet()
         if (isSet) {
             game.scaledScore += 3/game.scale
         }
-        else if cards.count == 3 {
+        else {
             game.scaledScore -= 5 / game.scale
         }
         scoreLabel.text = "Score: \(String(format: "%.1f", game.scaledScore))"
-        
-        for card in cards {
-            if (isSet) {
-                cardsArea.setCardDisplayState(card, displayState: .matched)
-            }
-            else {
-                cardsArea.setCardDisplayState(card, displayState: .mismatched)
-            }
-        }
     }
   
 }
