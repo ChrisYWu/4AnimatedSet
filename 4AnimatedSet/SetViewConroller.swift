@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SetViewConroller: UIViewController {
     var game = SetGame()
 
     private var initialDispense = 12

@@ -11,7 +11,7 @@
 		AA0295CA21BAE0C0003575F5 /* PlaceHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295C921BAE0C0003575F5 /* PlaceHolder.swift */; };
 		AA0295CC21BEB814003575F5 /* CardBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295CB21BEB814003575F5 /* CardBehavior.swift */; };
 		AA9FE9FA21B33E28006CE8E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FE9F921B33E28006CE8E2 /* AppDelegate.swift */; };
-		AA9FE9FC21B33E28006CE8E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FE9FB21B33E28006CE8E2 /* ViewController.swift */; };
+		AA9FE9FC21B33E28006CE8E2 /* SetViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FE9FB21B33E28006CE8E2 /* SetViewConroller.swift */; };
 		AA9FE9FF21B33E28006CE8E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA9FE9FD21B33E28006CE8E2 /* Main.storyboard */; };
 		AA9FEA0121B33E29006CE8E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA9FEA0021B33E29006CE8E2 /* Assets.xcassets */; };
 		AA9FEA0421B33E29006CE8E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA9FEA0221B33E29006CE8E2 /* LaunchScreen.storyboard */; };
@@ -30,7 +30,7 @@
 		AA0295CB21BEB814003575F5 /* CardBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardBehavior.swift; sourceTree = "<group>"; };
 		AA9FE9F621B33E28006CE8E2 /* 4AnimatedSet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 4AnimatedSet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA9FE9F921B33E28006CE8E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AA9FE9FB21B33E28006CE8E2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AA9FE9FB21B33E28006CE8E2 /* SetViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewConroller.swift; sourceTree = "<group>"; };
 		AA9FE9FE21B33E28006CE8E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AA9FEA0021B33E29006CE8E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA9FEA0321B33E29006CE8E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,6 +58,7 @@
 		AA0295C421B6D417003575F5 /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
+				AA0295CB21BEB814003575F5 /* CardBehavior.swift */,
 				AA9FEA1E21B3417C006CE8E2 /* SymbolView.swift */,
 				AA9FEA1621B3416D006CE8E2 /* CardsAreaView.swift */,
 				AA9FEA1821B3416D006CE8E2 /* CardView.swift */,
@@ -89,11 +90,10 @@
 		AA9FE9F821B33E28006CE8E2 /* 4AnimatedSet */ = {
 			isa = PBXGroup;
 			children = (
-				AA0295CB21BEB814003575F5 /* CardBehavior.swift */,
-				AA9FEA1921B3416D006CE8E2 /* Extensions.swift */,
-				AA9FE9FB21B33E28006CE8E2 /* ViewController.swift */,
 				AA9FE9FD21B33E28006CE8E2 /* Main.storyboard */,
+				AA9FE9FB21B33E28006CE8E2 /* SetViewConroller.swift */,
 				AA9FEA0521B33E29006CE8E2 /* Info.plist */,
+				AA9FEA1921B3416D006CE8E2 /* Extensions.swift */,
 				AA9FEA0021B33E29006CE8E2 /* Assets.xcassets */,
 				AA0295C421B6D417003575F5 /* SetGame */,
 				AA9FEA0D21B33EC0006CE8E2 /* SupportingFiles */,
@@ -182,7 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA9FEA1C21B3416D006CE8E2 /* CardView.swift in Sources */,
-				AA9FE9FC21B33E28006CE8E2 /* ViewController.swift in Sources */,
+				AA9FE9FC21B33E28006CE8E2 /* SetViewConroller.swift in Sources */,
 				AA9FEA1321B34149006CE8E2 /* Card.swift in Sources */,
 				AA9FEA1F21B3417C006CE8E2 /* SymbolView.swift in Sources */,
 				AA9FEA1D21B3416D006CE8E2 /* Extensions.swift in Sources */,

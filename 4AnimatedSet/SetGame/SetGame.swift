@@ -27,7 +27,7 @@ class SetGame: CustomStringConvertible {
     
     var scaledScore = 0.0
     private var cards = [Card]()
-    private var dimension = 3
+    private var dimension = 4
     
     var totalCardsOnDeck : Int {
         return cards.filter{ $0.state == CardState.inDeck }.count
