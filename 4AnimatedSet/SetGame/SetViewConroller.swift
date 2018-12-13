@@ -90,12 +90,12 @@ class SetViewConroller: UIViewController {
                         cardsArea.bringSubviewToFront(cv)    //So that it doesn't fly behind other cards
                         cardBehavior.addItem(cv)
                         
-                        Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { timer in
+                        Timer.scheduledTimer(withTimeInterval: cardsArea.gridMaxCellCount * boundTimeToMaxCellCountRatio, repeats: false) { timer in
                             self.cardBehavior.removeItem(cv)
                             cv.displayState = .onDisplay
                             
                             UIViewPropertyAnimator.runningPropertyAnimator(
-                                withDuration: 0.6,
+                                withDuration: self.cardsArea.gridMaxCellCount * self.discardTimeToMaxCellCountRatio,
                                 delay: 0,
                                 options: .beginFromCurrentState,
                                 animations: {
@@ -184,7 +184,11 @@ class SetViewConroller: UIViewController {
             game.scaledScore -= 5 / game.scale
         }
         scoreLabel.text = "Score: \(String(format: "%.1f", game.scaledScore))"
-    }
-  
+    }  
 }
 
+
+extension SetViewConroller {
+    var boundTimeToMaxCellCountRatio : Double { return 0.04 }
+    var discardTimeToMaxCellCountRatio : Double { return 0.04 }
+}

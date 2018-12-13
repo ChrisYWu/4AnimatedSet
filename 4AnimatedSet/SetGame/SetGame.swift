@@ -11,7 +11,7 @@ import Foundation
 class SetGame: CustomStringConvertible {
     // MARK: Instance variables
     private var runnerIndex = 0
-    var cheatMode = false
+    var cheatMode = true
     
     private(set) var chosenCards = [Card]()
     private(set) var numberOfSetMatched = 0

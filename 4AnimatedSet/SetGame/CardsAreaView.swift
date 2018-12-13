@@ -13,6 +13,9 @@ class CardsAreaView: UIView {
     //MARK: Instance variables
     private var cardButtons = [Card: CardView]() { didSet { setNeedsDisplay(); setNeedsLayout() } }
     private(set) var grid = Grid(layout: Grid.Layout.aspectRatio(1.8))
+    var gridMaxCellCount: Double {
+        return Double(grid.dimensions.rowCount * grid.dimensions.columnCount)
+    }
     
     var dealPile = CardView()
     var discardPile = CardView()
