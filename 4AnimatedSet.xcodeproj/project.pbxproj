@@ -11,8 +11,6 @@
 		AA0295D121C171E0003575F5 /* ConcentrationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295CE21C171E0003575F5 /* ConcentrationCard.swift */; };
 		AA0295D221C171E0003575F5 /* ConcentrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295CF21C171E0003575F5 /* ConcentrationViewController.swift */; };
 		AA0295D921C1971F003575F5 /* ThemeChooserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295D821C1971F003575F5 /* ThemeChooserVC.swift */; };
-		AA40837621C97C720000D31B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA40837521C97C720000D31B /* Extensions.swift */; };
-		AA40837821C97C810000D31B /* CardBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA40837721C97C800000D31B /* CardBehavior.swift */; };
 		AA9FE9FA21B33E28006CE8E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FE9F921B33E28006CE8E2 /* AppDelegate.swift */; };
 		AA9FE9FC21B33E28006CE8E2 /* SetViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FE9FB21B33E28006CE8E2 /* SetViewConroller.swift */; };
 		AA9FE9FF21B33E28006CE8E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA9FE9FD21B33E28006CE8E2 /* Main.storyboard */; };
@@ -31,8 +29,6 @@
 		AA0295CE21C171E0003575F5 /* ConcentrationCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcentrationCard.swift; sourceTree = "<group>"; };
 		AA0295CF21C171E0003575F5 /* ConcentrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcentrationViewController.swift; sourceTree = "<group>"; };
 		AA0295D821C1971F003575F5 /* ThemeChooserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeChooserVC.swift; sourceTree = "<group>"; };
-		AA40837521C97C720000D31B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		AA40837721C97C800000D31B /* CardBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardBehavior.swift; sourceTree = "<group>"; };
 		AA9FE9F621B33E28006CE8E2 /* 4AnimatedSet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 4AnimatedSet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA9FE9F921B33E28006CE8E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA9FE9FB21B33E28006CE8E2 /* SetViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewConroller.swift; sourceTree = "<group>"; };
@@ -62,7 +58,6 @@
 		AA0295C421B6D417003575F5 /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
-				AA40837721C97C800000D31B /* CardBehavior.swift */,
 				AA9FE9FB21B33E28006CE8E2 /* SetViewConroller.swift */,
 				AA9FEA1E21B3417C006CE8E2 /* SymbolView.swift */,
 				AA9FEA1621B3416D006CE8E2 /* CardsAreaView.swift */,
@@ -103,7 +98,6 @@
 		AA9FE9F821B33E28006CE8E2 /* 4AnimatedSet */ = {
 			isa = PBXGroup;
 			children = (
-				AA40837521C97C720000D31B /* Extensions.swift */,
 				AA9FE9FD21B33E28006CE8E2 /* Main.storyboard */,
 				AA0295D821C1971F003575F5 /* ThemeChooserVC.swift */,
 				AA9FEA0521B33E29006CE8E2 /* Info.plist */,
@@ -203,12 +197,10 @@
 				AA0295D121C171E0003575F5 /* ConcentrationCard.swift in Sources */,
 				AA9FEA1A21B3416D006CE8E2 /* CardsAreaView.swift in Sources */,
 				AA0295D921C1971F003575F5 /* ThemeChooserVC.swift in Sources */,
-				AA40837621C97C720000D31B /* Extensions.swift in Sources */,
 				AA9FEA1521B34160006CE8E2 /* SetGame.swift in Sources */,
 				AA9FE9FA21B33E28006CE8E2 /* AppDelegate.swift in Sources */,
 				AA0295D221C171E0003575F5 /* ConcentrationViewController.swift in Sources */,
 				AA9FEA1B21B3416D006CE8E2 /* Grid.swift in Sources */,
-				AA40837821C97C810000D31B /* CardBehavior.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
