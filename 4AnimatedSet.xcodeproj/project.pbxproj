@@ -62,14 +62,14 @@
 		AA0295C421B6D417003575F5 /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
+				AA9FEA1221B34149006CE8E2 /* Card.swift */,
 				AA40837F21C97EC60000D31B /* CardBehavior.swift */,
+				AA9FEA1821B3416D006CE8E2 /* CardView.swift */,
+				AA9FEA1621B3416D006CE8E2 /* CardsAreaView.swift */,
 				AA9FE9FB21B33E28006CE8E2 /* SetViewConroller.swift */,
 				AA9FEA1E21B3417C006CE8E2 /* SymbolView.swift */,
-				AA9FEA1621B3416D006CE8E2 /* CardsAreaView.swift */,
-				AA9FEA1821B3416D006CE8E2 /* CardView.swift */,
 				AA9FEA1721B3416D006CE8E2 /* Grid.swift */,
 				AA9FEA1421B3415F006CE8E2 /* SetGame.swift */,
-				AA9FEA1221B34149006CE8E2 /* Card.swift */,
 			);
 			path = SetGame;
 			sourceTree = "<group>";
