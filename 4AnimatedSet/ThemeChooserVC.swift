@@ -54,7 +54,7 @@ class ThemeChooserVC: UIViewController, UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController,
                              collapseSecondary secondaryViewController: UIViewController,
                              onto primaryViewController: UIViewController) -> Bool {
-        print("collapseSecondary called")
+        //print("collapseSecondary called")
         // The following logic seems to be useless, this just get called once anyway
         if let cvc = secondaryViewController as? ConcentrationViewController {
             return cvc.themeNotSet

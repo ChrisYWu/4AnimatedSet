@@ -11,60 +11,65 @@ import UIKit
 class ConcentrationViewController: UIViewController {
 
     private lazy var game = Concentration(numberOfPairOfCards: numberOfPairOfCards)
-    var theme: Int = 0
+    var theme: Int = -1
     {
         didSet {
-            setGameUI()
+            if cardButtons != nil {
+                setGameUI()
+                updateViewFromModel()
+            }
         }
     }
     
     var themeNotSet = true
     
     override func viewDidLoad() {
-        theme = ConcentrationViewController.emojiChoices.count.arc4random
+        print("view did load: numberOfPairOfCards = \(numberOfPairOfCards)")
+        if (theme > -1) {
+            setGameUI()
+        }
     }
     
     private func setGameUI(){
-        let (emojiChoices, bgColor, cardBGColor) = ConcentrationViewController.emojiChoices[theme]
-        view.backgroundColor = bgColor
-        viewBackGroundColor = bgColor
+        let (emojiChoices, cardBGColor) = ConcentrationViewController.emojiChoices[theme]
         currentEmojiChoies = emojiChoices
         cardBackGroundColor = cardBGColor
-        flipCountLabel.backgroundColor = cardBGColor
-        flipCountLabel.textColor = bgColor
-        gameScore.backgroundColor = cardBGColor
-        gameScore.textColor = bgColor
-        newGameButton.backgroundColor = cardBGColor
-        newGameButton.setTitleColor(bgColor, for: UIControl.State.normal)
         
-        for index in cardButtons.indices{
-            cardButtons[index].backgroundColor = cardBGColor
+        for index in allCardButtons.indices{
+            allCardButtons[index].backgroundColor = cardBGColor
         }
         
         emoji = [:]
-        updateViewFromModel()
     }
     
     var numberOfPairOfCards : Int {
+        //return 10
         return (cardButtons.count + 1) / 2
     }
     
-    @IBOutlet private weak var flipCountLabel: UILabel!
-    
     private static var emojiChoices =
         [
-            (["🐶","🐱","🐭","🦄","🐔","🐸","🐤","🐥"], #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)),
-            (["😀","😍","🤓","😜","🤩","😩","😡","😰"], #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1), #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)),
-            (["🍏","🍊","🥑","🍆","🥖","🍅","🥦","🥒"], #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)),
-            (["⚽️","🏀","🏈","⚾️","🎾","🏐","🏉","🎱"], #colorLiteral(red: 0.1921568662, green: 0.007843137719, blue: 0.09019608051, alpha: 1), #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1))
+            (["🐶","🐱","🐭","🦄","🐔","🐸","🐤","🐥", "🦉", "🐒", "🦕", "🐡"], #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)),
+            //(["6️⃣","7️⃣","8️⃣","9️⃣","0️⃣","1️⃣","2️⃣","3️⃣", "4️⃣", "5️⃣", "🔟", "#️⃣"], #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)),
+            (["😀","😍","🤓","😜","🤩","😩","😡","😰", "🥺", "😤", "😊", "🤒"], #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)),
+            (["🍏","🍊","🥑","🍆","🍋","🍅","🥦","🥒", "🌽", "🥔", "🍇", "🍑"], #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)),
+            (["⚽️","🏀","🏈","⚾️","🎾","🏐","🏉","🎱", "🥊", "🏓", "⛳️", "⛸"], #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1))
         ]
     
-    private lazy var cardBackGroundColor = ConcentrationViewController.emojiChoices[theme].2
-    private lazy var viewBackGroundColor = ConcentrationViewController.emojiChoices[theme].1
+    private lazy var cardBackGroundColor = ConcentrationViewController.emojiChoices[theme].1
     private lazy var currentEmojiChoies = ConcentrationViewController.emojiChoices[theme].0
     
-    @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private var gameScore: UILabel!
+    @IBOutlet private weak var newGameButton: UIButton!
+
+    @IBOutlet private var allCardButtons: [UIButton]!
     
+    private var cardButtons: [UIButton]! {
+       return allCardButtons?.filter{ !$0.superview!.isHidden }
+    }
+    
+
     @IBAction private func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
@@ -72,27 +77,29 @@ class ConcentrationViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var gameScore: UILabel!
-    @IBAction func newGame() {
-        theme = ConcentrationViewController.emojiChoices.count.arc4random
+    @IBAction private func newGame() {        
+        print("[new game], theme index= \(theme), numberOfPairsOfCards=\(numberOfPairOfCards)")
         game = Concentration(numberOfPairOfCards: numberOfPairOfCards)
+        setGameUI()
         updateViewFromModel()
     }
     
-    @IBOutlet weak var newGameButton: UIButton!
+    
     private func updateViewFromModel() {
-        for index in cardButtons.indices{
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            //Set logic and not the flip logic
-            
+        //print("current date = \(Date())")
+        //print("updateViewFromModel, cardButtons.count=\(self.cardButtons.count)")
+        for index in 0 ..< self.game.cards.count {
+            let button = self.cardButtons[index]
+            let card = self.game.cards[index]
+            //print("index = \(index), card \(card.identifier), isFaceUp: \(card.isFaceUp), \(String(describing: button.superview?.isHidden))")
+            // Set logic and not the flip logic
             if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControl.State.normal)
-                button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)     // UIColor.white
+                button.setTitle(self.emoji(for: card), for: UIControl.State.normal)
+                button.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)     // UIColor.white
             }
             else{
                 button.setTitle("", for: UIControl.State.normal)
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : cardBackGroundColor
+                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : self.cardBackGroundColor
             }
         }
     }
@@ -102,20 +109,53 @@ class ConcentrationViewController: UIViewController {
     private func emoji(for card:ConcentrationCard) -> String {
         if emoji[card.identifier] == nil, currentEmojiChoies.count > 0 {
             emoji[card.identifier] = currentEmojiChoies.remove(at: currentEmojiChoies.count.arc4random)
+//            print("currentEmojiChoies.count=\(currentEmojiChoies.count)")
+//            print("\(emoji[card.identifier]!)")
         }
         
         return emoji[card.identifier] ?? "?"
     }
-}
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        print("\(Date()) > trait collection did change, cardButtons.count=\(cardButtons.count)")
+        if (cardButtons.count != allCardButtons.count && theme > -1) {
+            //This allow the show/hide logic happen, there has to be a better way
+            //And also if the thing starts from landscape mode it just doesn't work
+            Timer.scheduledTimer(withTimeInterval: 0.1,
+                                 repeats: false)
+            { timer in
+                self.updateViewFromModel()
+            }
+        }
+        
+        switch traitCollection.horizontalSizeClass {
+        case .compact :
+            print("horizontalSizeClass == .compact")
+        case .regular :
+            print("horizontalSizeClass == .regiular")
+        case .unspecified :
+            print("horizontalSizeClass == .unspecified")
+        }
+        
+        switch traitCollection.verticalSizeClass {
+        case .compact :
+            print("verticalSizeClass == .compact")
+        case .regular :
+            print("verticalSizeClass == .regiular")
+        case .unspecified :
+            print("verticalSizeClass == .unspecified")
+        }
+        
+       
+//        print("traitCollection.horizontalSizeClass = \(traitCollection.horizontalSizeClass)")
+//        print("traitCollection.verticalSizeClass = \(traitCollection.verticalSizeClass)")
 
-//extension Int {
-//    var arc4random: Int {
-//        if self > 0 {
-//            return Int(arc4random_uniform(UInt32(self)))
-//        } else if self < 0 {
-//            return -Int(arc4random_uniform(UInt32(abs(self))))
-//        } else {
-//            return 0
-//        }
-//    }
-//}
+        //Here it is still too early to updateViewFromModel, since the number of visible buttons are not known the first time this happens. Yet updateViewFromModel will case the game to be initialized and the number of visible buttons know
+    }
+    
+    override func viewWillLayoutSubviews() {
+        //print("\(Date()) > viewWillLayoutSubviews, cardButtons.count=\(cardButtons.count)")
+        //This is actually called twice, the first time didn't seem to work too well cause the visible buttons didn't react to trait collection. If we call updateViewFromModel, it will be too early to initialize the game
+        //This gets called too often, on every redraw it seems getting called
+    }
+}
