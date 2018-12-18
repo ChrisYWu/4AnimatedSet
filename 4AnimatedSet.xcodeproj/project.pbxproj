@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA0295CC21BEB814003575F5 /* CardBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295CB21BEB814003575F5 /* CardBehavior.swift */; };
 		AA0295D021C171E0003575F5 /* Concentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295CD21C171DF003575F5 /* Concentration.swift */; };
 		AA0295D121C171E0003575F5 /* ConcentrationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295CE21C171E0003575F5 /* ConcentrationCard.swift */; };
 		AA0295D221C171E0003575F5 /* ConcentrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0295CF21C171E0003575F5 /* ConcentrationViewController.swift */; };
@@ -22,12 +21,10 @@
 		AA9FEA1A21B3416D006CE8E2 /* CardsAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FEA1621B3416D006CE8E2 /* CardsAreaView.swift */; };
 		AA9FEA1B21B3416D006CE8E2 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FEA1721B3416D006CE8E2 /* Grid.swift */; };
 		AA9FEA1C21B3416D006CE8E2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FEA1821B3416D006CE8E2 /* CardView.swift */; };
-		AA9FEA1D21B3416D006CE8E2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FEA1921B3416D006CE8E2 /* Extensions.swift */; };
 		AA9FEA1F21B3417C006CE8E2 /* SymbolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FEA1E21B3417C006CE8E2 /* SymbolView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA0295CB21BEB814003575F5 /* CardBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardBehavior.swift; sourceTree = "<group>"; };
 		AA0295CD21C171DF003575F5 /* Concentration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Concentration.swift; sourceTree = "<group>"; };
 		AA0295CE21C171E0003575F5 /* ConcentrationCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcentrationCard.swift; sourceTree = "<group>"; };
 		AA0295CF21C171E0003575F5 /* ConcentrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcentrationViewController.swift; sourceTree = "<group>"; };
@@ -44,7 +41,6 @@
 		AA9FEA1621B3416D006CE8E2 /* CardsAreaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAreaView.swift; sourceTree = "<group>"; };
 		AA9FEA1721B3416D006CE8E2 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		AA9FEA1821B3416D006CE8E2 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		AA9FEA1921B3416D006CE8E2 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AA9FEA1E21B3417C006CE8E2 /* SymbolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				AA9FE9FB21B33E28006CE8E2 /* SetViewConroller.swift */,
-				AA0295CB21BEB814003575F5 /* CardBehavior.swift */,
 				AA9FEA1E21B3417C006CE8E2 /* SymbolView.swift */,
 				AA9FEA1621B3416D006CE8E2 /* CardsAreaView.swift */,
 				AA9FEA1821B3416D006CE8E2 /* CardView.swift */,
@@ -106,7 +101,6 @@
 				AA9FE9FD21B33E28006CE8E2 /* Main.storyboard */,
 				AA0295D821C1971F003575F5 /* ThemeChooserVC.swift */,
 				AA9FEA0521B33E29006CE8E2 /* Info.plist */,
-				AA9FEA1921B3416D006CE8E2 /* Extensions.swift */,
 				AA9FEA0021B33E29006CE8E2 /* Assets.xcassets */,
 				AA0295D321C171EB003575F5 /* Concentration */,
 				AA0295C421B6D417003575F5 /* SetGame */,
@@ -200,7 +194,6 @@
 				AA9FEA1321B34149006CE8E2 /* Card.swift in Sources */,
 				AA0295D021C171E0003575F5 /* Concentration.swift in Sources */,
 				AA9FEA1F21B3417C006CE8E2 /* SymbolView.swift in Sources */,
-				AA9FEA1D21B3416D006CE8E2 /* Extensions.swift in Sources */,
 				AA0295D121C171E0003575F5 /* ConcentrationCard.swift in Sources */,
 				AA9FEA1A21B3416D006CE8E2 /* CardsAreaView.swift in Sources */,
 				AA0295D921C1971F003575F5 /* ThemeChooserVC.swift in Sources */,
@@ -208,7 +201,6 @@
 				AA9FE9FA21B33E28006CE8E2 /* AppDelegate.swift in Sources */,
 				AA0295D221C171E0003575F5 /* ConcentrationViewController.swift in Sources */,
 				AA9FEA1B21B3416D006CE8E2 /* Grid.swift in Sources */,
-				AA0295CC21BEB814003575F5 /* CardBehavior.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
